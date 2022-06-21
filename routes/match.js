@@ -1,5 +1,5 @@
 const express = require('express')
-const Example = require('../models/example.model')
+const Match = require('../models/match.model')
 
 module.exports = express
   .Router()
@@ -8,7 +8,7 @@ module.exports = express
   .post('/', async (req, res, next) => {
     try {
       console.log('Got: ', req.body)
-      res.json(await Example.create(new Example(req.body)))
+      res.json(await Match.create(new Match(req.body)))
     } catch (err) {
       console.error('Error while adding: ', err.message)
       next(err)
@@ -18,7 +18,7 @@ module.exports = express
   // List ALL items
   .get('/', async (req, res, next) => {
     try {
-      res.json(await Example.getAll(req.query.page))
+      res.json(await Match.get(req.query.page))
     } catch (err) {
       console.error('Error while getting all: ', err.message)
       next(err)
@@ -28,7 +28,7 @@ module.exports = express
   // Get a specific item
   .get('/:id', async (req, res, next) => {
     try {
-      res.json(await Example.getById(req.params.id))
+      res.json(await Match.getById(req.params.id))
     } catch (err) {
       res.json({
         message: `Error while getting specific: ${err.message}`,
@@ -40,7 +40,7 @@ module.exports = express
   // Put an item
   .put('/', async (req, res, next) => {
     try {
-      res.json(await Example.put(new Example(req.body)))
+      res.json(await Match.put(new Match(req.body)))
     } catch (err) {
       res.json({
         message: `Error while putting: ${err.message}`,
@@ -52,7 +52,7 @@ module.exports = express
   // Patch an item
   .patch('/', async (req, res, next) => {
     try {
-      res.json(await Example.patch(req.body))
+      res.json(await Match.patch(req.body))
     } catch (err) {
       res.json({
         message: `Error while patching: ${err.message}`,
@@ -64,7 +64,7 @@ module.exports = express
   // Delete an item
   .delete(['/', '/:id'], async (req, res, next) => {
     try {
-      res.json(await Example.delete(req.params.id || req.body.id))
+      res.json(await Match.delete(req.params.id || req.body.id))
     } catch (err) {
       res.json({
         message: `Error while deleting: ${err.message}`,
