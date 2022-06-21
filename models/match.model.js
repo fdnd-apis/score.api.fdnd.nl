@@ -27,7 +27,7 @@ const match = function (match) {
  * @returns
  */
 match.get = async function (page = 1) {
-  const rows = await db.query(`SELECT * FROM `match` LIMIT ?,?`, [
+  const rows = await db.query(`SELECT * FROM score LIMIT ?,?`, [
     helper.getOffset(page, process.env.LIST_PER_PAGE),
     Number(process.env.LIST_PER_PAGE),
   ])
@@ -44,7 +44,7 @@ match.get = async function (page = 1) {
  * @returns
  */
 match.getById = async function (matchId) {
-  const rows = await db.query(`SELECT * FROM `match` WHERE matchId = ?`, [matchId])
+  const rows = await db.query(`SELECT * FROM score WHERE matchId = ?`, [matchId])
   return {
     data: helper.emptyOrRows(rows),
     meta: { page },
@@ -57,7 +57,7 @@ match.getById = async function (matchId) {
  * @returns an object containing the inserted match with the newly inserted matchId
  */
 match.post = async function (match) {
-  const rows = await db.query(`INSERT INTO `match` SET ${prepareQuery(match)}`, prepareParams(match))
+  const rows = await db.query(`INSERT INTO score SET ${prepareQuery(match)}`, prepareParams(match))
   match.matchId = rows.insertId
   return {
     data: [match],
@@ -74,7 +74,7 @@ match.post = async function (match) {
  */
 match.patch = async function (match) {
   const rows = await db.query(
-    `UPDATE `match` SET ${prepareQuery(match)} WHERE matchId = ?`,
+    `UPDATE score SET ${prepareQuery(match)} WHERE matchId = ?`,
     prepareParams(match)
   )
   return {
@@ -90,7 +90,7 @@ match.patch = async function (match) {
  */
 match.put = async function (match) {
   const rows = await db.query(
-    `UPDATE `match` SET ${prepareQuery(match)} WHERE matchId = ?`,
+    `UPDATE score SET ${prepareQuery(match)} WHERE matchId = ?`,
     prepareParams(match)
   )
   return {
@@ -105,7 +105,7 @@ match.put = async function (match) {
  * @returns
  */
 match.delete = async function (matchId) {
-  const rows = await db.query(`DELETE FROM `match` WHERE matchId = ?`, [matchId])
+  const rows = await db.query(`DELETE FROM score WHERE matchId = ?`, [matchId])
   return {
     data: helper.emptyOrRows(rows),
     meta: {},
